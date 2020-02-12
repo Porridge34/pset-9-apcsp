@@ -87,6 +87,12 @@ h2 {
   width: 456px;
 }
 
+.wrap2 {
+  flex-wrap: wrap;
+  height: 576px;
+  width: 576px;
+}
+
 /*
  * The square itself. We give it a specific size and border.
  */
@@ -110,6 +116,35 @@ h2 {
 /*
  * The reset button sits just below the board.
  */
+
+.square-checkers {
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  height: 70px;
+  user-select: none;
+  width: 70px;
+}
+
+#black:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+#white:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+#black {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+#white {
+  background-color: white;
+  color: black;
+  text-align: center;
+}
 
 #reset-button {
   background-color: white;
