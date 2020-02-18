@@ -1,9 +1,9 @@
 ///////////////////// CONSTANTS /////////////////////////////////////
-//tic tac toe
+//checkers
 const squares = Array.from(document.querySelectorAll("#board div"));
 const message = document.querySelector("h2");
 ///////////////////// APP STATE (VARIABLES) /////////////////////////
-//tic tac toe
+//checkers
 let board;
 let turn;
 let win;
@@ -11,12 +11,17 @@ let aIXorO;
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
-//tic tac toe
+//checkers
 window.onload = init;
 document.getElementById("board").onclick = takeTurn;
 document.getElementById("reset-button").onclick = init;
+squares.forEach(function(mark){
+  mark.addEventListener('click', function(ev) {
+  ev.target.classList.toggle('selected-piece');
+  }, false)
+});
 ///////////////////// FUNCTIONS /////////////////////////////////////
-//tic tac toe
+//checkers
 function getWinner() {
   let winner = null;
   let countBlack = 0;
@@ -56,7 +61,6 @@ function takeTurn(e) {
     let selectedPiece = squares.findIndex(function(square){
       return square === e.target;
     })
-    (selectedPiece === "B" && turn === "Black") //where i left off last
     let index = squares.findIndex(function(square) {
       return square === e.target;
     });

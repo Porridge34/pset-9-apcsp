@@ -53,7 +53,6 @@ h2 {
   font-weight: lighter;
   margin: 2%;
 }
-
 /*
  * The container is a flex-box, which is a powerful layout tool. It grows
  * dyanamically, and allows us to position our elements with precision.
@@ -122,6 +121,7 @@ h2 {
   height: 70px;
   user-select: none;
   width: 70px;
+  color: white;
 }
 
 #black:hover {
@@ -136,13 +136,11 @@ h2 {
 
 #black {
   background-color: black;
-  color: white;
   text-align: center;
 }
 
 #white {
   background-color: white;
-  color: black;
   text-align: center;
 }
 
@@ -175,4 +173,9 @@ h2 {
   line-height: 150px;
   user-select: none;
   width: 150px;
+}
+
+.selected-piece {
+  font-weight: bold;
+  color: red;
 }
