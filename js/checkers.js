@@ -13,13 +13,9 @@ let aIXorO;
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 //checkers
 window.onload = init;
-document.getElementById("board").onclick = takeTurn;
+document.getElementById("board").onclick = takeTurn; //causes an infinite loop pls fix
 document.getElementById("reset-button").onclick = init;
-squares.forEach(function(mark){
-  mark.addEventListener('click', function(ev) {
-  ev.target.classList.toggle('selected-piece');
-  }, false)
-});
+
 ///////////////////// FUNCTIONS /////////////////////////////////////
 //checkers
 function getWinner() {
@@ -58,14 +54,21 @@ function render() {
 }
 function takeTurn(e) {
   if (!win) {
-    let selectedPiece = squares.findIndex(function(square){
-      return square === e.target;
-    })
+    let selectedPiece = "";
+    while (board[selectedPiece] === "" || board[selectedPiece] !==turn.charAt(0)){
+      selectedPiece = squares.findIndex(function(square){
+        return square === e.target;
+      })
+    }
+    squares[selectedPiece].classList.toggle('selected-piece');
     let index = squares.findIndex(function(square) {
       return square === e.target;
     });
     if (board[index] === "") {
+      console.log("this piece of shit still doesnt work")
       (turn === "Black")? board[index] = "B": board[index] = "W";
+      board[selectedPiece] = "";
+      squares[selectedPiece].classList.toggle('selected-piece');
       turn = turn === "Black" ? "White" : "Black";
       win = getWinner();
       render();
