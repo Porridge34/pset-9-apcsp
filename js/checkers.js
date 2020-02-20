@@ -56,14 +56,15 @@ function render() {
 function selectPiece(e) {
   if (!win) {
     selectedPiece = "";
-    do{
-      selectedPiece = squares.findIndex(function(square){
-        return square === e.target;
-      })
-    }while(selectedPiece === "" && board[selectedPiece] !== turn.charAt(0))
-    pieceSelected = true;
-    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
-    squares[selectedPiece].classList.toggle('selected-piece');
+    console.log("selectPiece is running");
+    selectedPiece = squares.findIndex(function(square){
+      return square === e.target;
+    });
+    if(board[selectedPiece] === turn.charAt(0)){
+      pieceSelected = true;
+      console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
+      squares[selectedPiece].classList.toggle('selected-piece');
+    }
     turnOrSelect();
   }
 }
@@ -72,7 +73,7 @@ function takeTurn(e){
   let index = squares.findIndex(function(square) {
     return square === e.target;
   });
-  if (board[index] === "" || index !== selectedPiece) {
+  if (board[index] === "" && index !== selectedPiece && checkValidMove) {
     console.log("this piece of crap still doesnt work");
     (turn === "Black")? board[index] = "B": board[index] = "W";
     board[selectedPiece] = "";
@@ -81,16 +82,36 @@ function takeTurn(e){
     win = getWinner();
     render();
     pieceSelected = false;
-    turnOrSelect();
+  }else if(index === selectedPiece){
+    squares[selectedPiece].classList.toggle('selected-piece');
+    pieceSelected = false;
   }
+  turnOrSelect();
 }
 function turnOrSelect(){
   if (pieceSelected === true){
+    document.getElementById("board").removeEventListener("click", selectPiece);
     document.getElementById("board").addEventListener("click", takeTurn);
     console.log("piece is selected");
   }else{
     document.getElementById("board").removeEventListener("click", takeTurn);
     document.getElementById("board").addEventListener("click", selectPiece);
     console.log("piece not selected");
+  }
+}
+function checkValidMove(){
+  if (turn === "Black" && selectedPiece !== ""){
+    board.forEach(function(mark, index){
+      if (mark === ""){
+        if (index > selectedPiece){
+          if (selectedPiece%8 !== 0 && index = selectedPiece - 1){ // is not workingi reeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            squares[index].classList.toggle('available-move');
+          }
+          if (selectedPiece%8 !== 7 && index = selectedPiece + 1){
+            squares[index].classList.toggle('available-move');
+          }
+        }
+      }
+    });
   }
 }

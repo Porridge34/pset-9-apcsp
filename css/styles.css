@@ -124,22 +124,22 @@ h2 {
   color: white;
 }
 
-#black:hover {
+.black:hover {
   background-color: lightgray;
   cursor: pointer;
 }
 
-#white:hover {
+.white:hover {
   background-color: lightgray;
   cursor: pointer;
 }
 
-#black {
+.black {
   background-color: black;
   text-align: center;
 }
 
-#white {
+.white {
   background-color: white;
   text-align: center;
 }
@@ -178,4 +178,8 @@ h2 {
 .selected-piece {
   font-weight: bold;
   color: red;
+}
+
+.available-move {
+  background-color: green;
 }
