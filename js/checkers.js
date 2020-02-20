@@ -7,13 +7,14 @@ const message = document.querySelector("h2");
 let board;
 let turn;
 let win;
-let aIXorO;
+let pieceSelected = false;
+let selectedPiece;
 ///////////////////// CACHED ELEMENT REFERENCES /////////////////////
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 //checkers
 window.onload = init;
-document.getElementById("board").onclick = takeTurn; //causes an infinite loop pls fix
+turnOrSelect();
 document.getElementById("reset-button").onclick = init;
 
 ///////////////////// FUNCTIONS /////////////////////////////////////
@@ -52,26 +53,44 @@ function render() {
   message.textContent =
     (win === "Black" || win === "White")? `${win} wins!` : `Turn: ${turn}`;
 }
-function takeTurn(e) {
+function selectPiece(e) {
   if (!win) {
-    let selectedPiece = "";
-    while (board[selectedPiece] === "" || board[selectedPiece] !==turn.charAt(0)){
+    selectedPiece = "";
+    do{
       selectedPiece = squares.findIndex(function(square){
         return square === e.target;
       })
-    }
+    }while(selectedPiece === "" && board[selectedPiece] !== turn.charAt(0))
+    pieceSelected = true;
+    console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
     squares[selectedPiece].classList.toggle('selected-piece');
-    let index = squares.findIndex(function(square) {
-      return square === e.target;
-    });
-    if (board[index] === "") {
-      console.log("this piece of shit still doesnt work")
-      (turn === "Black")? board[index] = "B": board[index] = "W";
-      board[selectedPiece] = "";
-      squares[selectedPiece].classList.toggle('selected-piece');
-      turn = turn === "Black" ? "White" : "Black";
-      win = getWinner();
-      render();
-    }
+    turnOrSelect();
+  }
+}
+function takeTurn(e){
+  console.log("why not work");
+  let index = squares.findIndex(function(square) {
+    return square === e.target;
+  });
+  if (board[index] === "" || index !== selectedPiece) {
+    console.log("this piece of crap still doesnt work");
+    (turn === "Black")? board[index] = "B": board[index] = "W";
+    board[selectedPiece] = "";
+    squares[selectedPiece].classList.toggle('selected-piece');
+    turn = turn === "Black" ? "White" : "Black";
+    win = getWinner();
+    render();
+    pieceSelected = false;
+    turnOrSelect();
+  }
+}
+function turnOrSelect(){
+  if (pieceSelected === true){
+    document.getElementById("board").addEventListener("click", takeTurn);
+    console.log("piece is selected");
+  }else{
+    document.getElementById("board").removeEventListener("click", takeTurn);
+    document.getElementById("board").addEventListener("click", selectPiece);
+    console.log("piece not selected");
   }
 }
