@@ -183,3 +183,7 @@ h2 {
 .available-move {
   background-color: green;
 }
+
+.available-jump {
+  background-color: red;
+}

@@ -49,8 +49,8 @@ function init() {
 function render() {
   board.forEach(function(mark, index) {
     squares[index].textContent = mark;
-    (squares[index].classList.contains("available-move"))?
-      squares[index].classList.toggle('available-move'): squares[index];
+    squares[index].classList.remove('remove-9', 'remove-7', 'remove+9',
+    'remove+7', 'available-move', 'available-jump');
   });
   message.textContent =
     (win === "Black" || win === "White")? `${win} wins!` : `Turn: ${turn}`;
@@ -74,7 +74,7 @@ function takeTurn(e){
   let index = squares.findIndex(function(square) {
     return square === e.target;
   });
-  checkValidMove(index);
+  (turn === "Black")? checkValidMoveB(index) : checkValidMoveW(index);
   if (board[index] === "" && index !== selectedPiece &&
   squares[index].classList.contains("available-move")) {
     (turn === "Black")? board[index] = "B": board[index] = "W";
@@ -82,11 +82,35 @@ function takeTurn(e){
     squares[selectedPiece].classList.toggle('selected-piece');
     turn = turn === "Black" ? "White" : "Black";
     win = getWinner();
-    render();
     pieceSelected = false;
+    render();
   }else if(index === selectedPiece){
     squares[selectedPiece].classList.toggle('selected-piece');
     pieceSelected = false;
+    render();
+  }else if (board[index] === "" && index !== selectedPiece &&
+  squares[index].classList.contains("available-jump")){
+    (turn === "Black")? board[index] = "B": board[index] = "W";
+    board[selectedPiece] = "";
+    squares[selectedPiece].classList.toggle('selected-piece');
+    turn = turn === "Black" ? "White" : "Black";
+    switch (squares[index].classList){
+      case squares[index].classList.contains("remove+9"):
+        board[selectedPiece+9] = "";
+        break;
+      case squares[index].classList.contains("remove-9"):
+        board[selectedPiece-9] = "";
+        break;
+      case squares[index].classList.contains("remove-7"):
+        board[selectedPiece+9] = "";
+        break;
+      case squares[index].classList.contains("remove+7"):
+        board[selectedPiece+7] = "";
+        break;
+    }
+    win = getWinner();
+    pieceSelected = false;
+    render();
   }
   turnOrSelect();
 }
@@ -101,25 +125,27 @@ function turnOrSelect(){
     console.log("piece not selected");
   }
 }
-function checkValidMove(index){
-  if (turn === "Black" && selectedPiece !== "" && board[index] == ""){
+function checkValidMoveB(index){
+  if (selectedPiece !== "" && board[index] == ""){
     (selectedPiece%8!==0 && board[selectedPiece+7]==="")?
-      squares[selectedPiece+7].classList.toggle('available-move') : selectedPiece;
+      squares[selectedPiece+7].classList.add('available-move') : selectedPiece;
     (selectedPiece%8!==7 && board[selectedPiece+9]==="")?
-      squares[selectedPiece+9].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && board[selectedPiece + 18] == "" && board[selectedPiece+7] == "W")?
-      squares[selectedPiece+18].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==1 && board[selectedPiece + 14] == "" && board[selectedPiece+9] == "W")?
-      squares[selectedPiece+14].classList.toggle('available-move') : selectedPiece;
+      squares[selectedPiece+9].classList.add('available-move') : selectedPiece;
+    (selectedPiece%8!==6 && selectedPiece%8 !== 7 && board[selectedPiece + 18] == "" && board[selectedPiece+7] == "W")?
+      squares[selectedPiece+18].classList.add('available-jump', 'remove+7') : selectedPiece;
+    (selectedPiece%8!==1 && selectedPiece%8 !== 0 && board[selectedPiece + 14] == "" && board[selectedPiece+9] == "W")?
+      squares[selectedPiece+14].classList.add('available-jump', 'remove+9') : selectedPiece;
   }
-  if (turn === "White" && selectedPiece !== "" && board[index] == ""){
+}
+function checkValidMoveW(index){
+  if (selectedPiece !== "" && board[index] == ""){
     (selectedPiece%8!==7 && board[selectedPiece-7] == "")?
-      squares[selectedPiece-7].classList.toggle('available-move') : selectedPiece;
+      squares[selectedPiece-7].classList.add('available-move') : selectedPiece;
     (selectedPiece%8!==0 && board[selectedPiece-9] == "")?
-      squares[selectedPiece-9].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && board[selectedPiece-18] == "" && board[selectedPiece-9] == "B")?
-      squares[selectedPiece-18].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==1 && board[selectedPiece-14] == "" && board[selectedPiece-7] == "B")?
-      squares[selectedPiece-14].classList.toggle('available-move') : selectedPiece;
+      squares[selectedPiece-9].classList.add('available-move') : selectedPiece;
+    (selectedPiece%8!==6 && selectedPiece%8 !== 7 && board[selectedPiece-18] == "" && board[selectedPiece-9] == "B")?
+      squares[selectedPiece-18].classList.add('available-jump', 'remove-9') : selectedPiece;
+    (selectedPiece%8!==1 && selectedPiece%8 !== 0 && board[selectedPiece-14] == "" && board[selectedPiece-7] == "B")?
+      squares[selectedPiece-14].classList.add('available-jump', 'remove-7') : selectedPiece;
   }
 }
