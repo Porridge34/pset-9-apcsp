@@ -49,6 +49,8 @@ function init() {
 function render() {
   board.forEach(function(mark, index) {
     squares[index].textContent = mark;
+    (squares[index].classList.contains("available-move"))?
+      squares[index].classList.toggle('available-move'): squares[index];
   });
   message.textContent =
     (win === "Black" || win === "White")? `${win} wins!` : `Turn: ${turn}`;
@@ -69,11 +71,12 @@ function selectPiece(e) {
   }
 }
 function takeTurn(e){
-  console.log("why not work");
   let index = squares.findIndex(function(square) {
     return square === e.target;
   });
-  if (board[index] === "" && index !== selectedPiece && checkValidMove) {
+  checkValidMove(index);
+  if (board[index] === "" && index !== selectedPiece &&
+  squares[index].classList.contains("available-move")) {
     console.log("this piece of crap still doesnt work");
     (turn === "Black")? board[index] = "B": board[index] = "W";
     board[selectedPiece] = "";
@@ -99,19 +102,35 @@ function turnOrSelect(){
     console.log("piece not selected");
   }
 }
-function checkValidMove(){
-  if (turn === "Black" && selectedPiece !== ""){
-    board.forEach(function(mark, index){
-      if (mark === ""){
-        if (index > selectedPiece){
-          if (selectedPiece%8 !== 0 && index = selectedPiece - 1){ // is not workingi reeeeeeeeeeeeeeeeeeeeeeeeeeeee
-            squares[index].classList.toggle('available-move');
-          }
-          if (selectedPiece%8 !== 7 && index = selectedPiece + 1){
-            squares[index].classList.toggle('available-move');
-          }
-        }
-      }
-    });
+function checkValidMove(index){
+  if (turn === "Black" && selectedPiece !== "" && board[index] == ""){
+    (selectedPiece%8!==0)?squares[selectedPiece+7].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==7)?squares[selectedPiece+9].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==6 && index == selectedPiece + 9 && board[index+7] == "W")?
+      squares[selectedPiece+18].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==1 && index == selectedPiece + 7 && board[index+9] == "W")?
+      squares[selectedPiece+12].classList.toggle('available-move') : selectedPiece;
+  }
+  if (turn === "White" && selectedPiece !== "" && board[index] == ""){
+    (selectedPiece%8!==7)?squares[selectedPiece-7].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==0)?squares[selectedPiece-9].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==6 && index == selectedPiece - 7 && board[index-7] == "B")?
+      squares[selectedPiece-18].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==1 && index == selectedPiece - 9 && board[index-9] == "B")?
+      squares[selectedPiece-12].classList.toggle('available-move') : selectedPiece;
   }
 }
+/*
+board.forEach(function(mark, index){
+  if (mark === "" && index%2===1){
+    if (index > selectedPiece){
+      if (selectedPiece%8 !== 0 && index == selectedPiece + 9){ // is not workingi reeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        squares[index].classList.toggle('available-move');
+      }
+      if (selectedPiece%8 !== 7 && index == selectedPiece + 7){
+        squares[index].classList.toggle('available-move');
+      }
+    }
+  }
+});
+*/
