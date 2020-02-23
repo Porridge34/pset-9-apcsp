@@ -104,20 +104,22 @@ function turnOrSelect(){
 }
 function checkValidMove(index){
   if (turn === "Black" && selectedPiece !== "" && board[index] == ""){
-    (selectedPiece%8!==0)?squares[selectedPiece+7].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==7)?squares[selectedPiece+9].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && index == selectedPiece + 9 && board[index+7] == "W")?
+    (selectedPiece%8!==0 && board[selectedPiece+7]==="")?
+      squares[selectedPiece+7].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==7 && board[selectedPiece+9]==="")?
+      squares[selectedPiece+9].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==6 && board[selectedPiece + 18] == "" && board[selectedPiece+7] == "W")?
       squares[selectedPiece+18].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==1 && index == selectedPiece + 7 && board[index+9] == "W")?
-      squares[selectedPiece+12].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==1 && board[selectedPiece + 14] == "" && board[selectedPiece+9] == "W")?
+      squares[selectedPiece+14].classList.toggle('available-move') : selectedPiece;
   }
   if (turn === "White" && selectedPiece !== "" && board[index] == ""){
     (selectedPiece%8!==7)?squares[selectedPiece-7].classList.toggle('available-move') : selectedPiece;
     (selectedPiece%8!==0)?squares[selectedPiece-9].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && index == selectedPiece - 7 && board[index-7] == "B")?
+    (selectedPiece%8!==6 && index == selectedPiece - 18 && board[index-9] == "B")?
       squares[selectedPiece-18].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==1 && index == selectedPiece - 9 && board[index-9] == "B")?
-      squares[selectedPiece-12].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==1 && index == selectedPiece - 14 && board[index-7] == "B")?
+      squares[selectedPiece-14].classList.toggle('available-move') : selectedPiece;
   }
 }
 /*
