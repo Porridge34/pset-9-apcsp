@@ -94,19 +94,14 @@ function takeTurn(e){
     board[selectedPiece] = "";
     squares[selectedPiece].classList.toggle('selected-piece');
     turn = turn === "Black" ? "White" : "Black";
-    switch (squares[index].classList){
-      case squares[index].classList.contains("remove+9"):
-        board[selectedPiece+9] = "";
-        break;
-      case squares[index].classList.contains("remove-9"):
-        board[selectedPiece-9] = "";
-        break;
-      case squares[index].classList.contains("remove-7"):
-        board[selectedPiece+9] = "";
-        break;
-      case squares[index].classList.contains("remove+7"):
-        board[selectedPiece+7] = "";
-        break;
+    if(squares[index].classList.contains("remove-9")){
+      board[selectedPiece-9] = "";
+    }else if(squares[index].classList.contains("remove+9")){
+      board[selectedPiece+9] = "";
+    }else if(squares[index].classList.contains("remove-7")){
+      board[selectedPiece-7] = "";
+    }else if(squares[index].classList.contains("remove+7")){
+      board[selectedPiece+7] = "";
     }
     win = getWinner();
     pieceSelected = false;
@@ -127,25 +122,27 @@ function turnOrSelect(){
 }
 function checkValidMoveB(index){
   if (selectedPiece !== "" && board[index] == ""){
+    console.log("checking black moves");
     (selectedPiece%8!==0 && board[selectedPiece+7]==="")?
       squares[selectedPiece+7].classList.add('available-move') : selectedPiece;
     (selectedPiece%8!==7 && board[selectedPiece+9]==="")?
       squares[selectedPiece+9].classList.add('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && selectedPiece%8 !== 7 && board[selectedPiece + 18] == "" && board[selectedPiece+7] == "W")?
+    (selectedPiece%8!==6 && selectedPiece%8 !== 0 && board[selectedPiece + 18] === "" && board[selectedPiece+7] === "W")?
       squares[selectedPiece+18].classList.add('available-jump', 'remove+7') : selectedPiece;
-    (selectedPiece%8!==1 && selectedPiece%8 !== 0 && board[selectedPiece + 14] == "" && board[selectedPiece+9] == "W")?
+    (selectedPiece%8!==1 && selectedPiece%8 !== 7 && board[selectedPiece + 14] === "" && board[selectedPiece+9] === "W")?
       squares[selectedPiece+14].classList.add('available-jump', 'remove+9') : selectedPiece;
   }
 }
 function checkValidMoveW(index){
-  if (selectedPiece !== "" && board[index] == ""){
-    (selectedPiece%8!==7 && board[selectedPiece-7] == "")?
+  if (selectedPiece !== "" && board[index] === ""){
+    console.log("checking white moves");
+    (selectedPiece%8!==7 && board[selectedPiece-7] === "")?
       squares[selectedPiece-7].classList.add('available-move') : selectedPiece;
-    (selectedPiece%8!==0 && board[selectedPiece-9] == "")?
+    (selectedPiece%8!==0 && board[selectedPiece-9] === "")?
       squares[selectedPiece-9].classList.add('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && selectedPiece%8 !== 7 && board[selectedPiece-18] == "" && board[selectedPiece-9] == "B")?
+    (selectedPiece%8!==1 && selectedPiece%8 !== 7 && board[selectedPiece-18] === "" && board[selectedPiece-9] === "B")?
       squares[selectedPiece-18].classList.add('available-jump', 'remove-9') : selectedPiece;
-    (selectedPiece%8!==1 && selectedPiece%8 !== 0 && board[selectedPiece-14] == "" && board[selectedPiece-7] == "B")?
+    (selectedPiece%8!==6 && selectedPiece%8 !== 0 && board[selectedPiece-14] === "" && board[selectedPiece-7] === "B")?
       squares[selectedPiece-14].classList.add('available-jump', 'remove-7') : selectedPiece;
   }
 }
