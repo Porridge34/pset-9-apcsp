@@ -51,6 +51,10 @@ function render() {
     squares[index].textContent = mark;
     squares[index].classList.remove('remove-9', 'remove-7', 'remove+9',
     'remove+7', 'available-move', 'available-jump');
+    (!squares[index].classList.contains('king') && mark = "B" && index > 55)?
+      squares[index].classList.add('king') : index;
+    (!squares[index].classList.contains('king') && mark = "W" && index < 7)?
+      squares[index].classList.add('king') : index;
   });
   message.textContent =
     (win === "Black" || win === "White")? `${win} wins!` : `Turn: ${turn}`;
@@ -131,6 +135,16 @@ function checkValidMoveB(index){
       squares[selectedPiece+18].classList.add('available-jump', 'remove+7') : selectedPiece;
     (selectedPiece%8!==1 && selectedPiece%8 !== 7 && board[selectedPiece + 14] === "" && board[selectedPiece+9] === "W")?
       squares[selectedPiece+14].classList.add('available-jump', 'remove+9') : selectedPiece;
+    if (square[selectedPiece].classList.contains('king')){
+      (selectedPiece%8!==7 && board[selectedPiece-7] === "")?
+        squares[selectedPiece-7].classList.add('available-move') : selectedPiece;
+      (selectedPiece%8!==0 && board[selectedPiece-9] === "")?
+        squares[selectedPiece-9].classList.add('available-move') : selectedPiece;
+      (selectedPiece%8!==1 && selectedPiece%8 !== 7 && board[selectedPiece-18] === "" && board[selectedPiece-9] === "W")?
+        squares[selectedPiece-18].classList.add('available-jump', 'remove-9') : selectedPiece;
+      (selectedPiece%8!==6 && selectedPiece%8 !== 0 && board[selectedPiece-14] === "" && board[selectedPiece-7] === "W")?
+        squares[selectedPiece-14].classList.add('available-jump', 'remove-7') : selectedPiece;
+    }
   }
 }
 function checkValidMoveW(index){
@@ -144,5 +158,15 @@ function checkValidMoveW(index){
       squares[selectedPiece-18].classList.add('available-jump', 'remove-9') : selectedPiece;
     (selectedPiece%8!==6 && selectedPiece%8 !== 0 && board[selectedPiece-14] === "" && board[selectedPiece-7] === "B")?
       squares[selectedPiece-14].classList.add('available-jump', 'remove-7') : selectedPiece;
+    if (square[selectedPiece].classList.contains('king')){
+      (selectedPiece%8!==0 && board[selectedPiece+7]==="")?
+        squares[selectedPiece+7].classList.add('available-move') : selectedPiece;
+      (selectedPiece%8!==7 && board[selectedPiece+9]==="")?
+        squares[selectedPiece+9].classList.add('available-move') : selectedPiece;
+      (selectedPiece%8!==6 && selectedPiece%8 !== 0 && board[selectedPiece + 18] === "" && board[selectedPiece+7] === "B")?
+        squares[selectedPiece+18].classList.add('available-jump', 'remove+7') : selectedPiece;
+      (selectedPiece%8!==1 && selectedPiece%8 !== 7 && board[selectedPiece + 14] === "" && board[selectedPiece+9] === "B")?
+        squares[selectedPiece+14].classList.add('available-jump', 'remove+9') : selectedPiece;
+    }
   }
 }
