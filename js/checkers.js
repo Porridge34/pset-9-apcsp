@@ -77,7 +77,6 @@ function takeTurn(e){
   checkValidMove(index);
   if (board[index] === "" && index !== selectedPiece &&
   squares[index].classList.contains("available-move")) {
-    console.log("this piece of crap still doesnt work");
     (turn === "Black")? board[index] = "B": board[index] = "W";
     board[selectedPiece] = "";
     squares[selectedPiece].classList.toggle('selected-piece');
@@ -114,25 +113,13 @@ function checkValidMove(index){
       squares[selectedPiece+14].classList.toggle('available-move') : selectedPiece;
   }
   if (turn === "White" && selectedPiece !== "" && board[index] == ""){
-    (selectedPiece%8!==7)?squares[selectedPiece-7].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==0)?squares[selectedPiece-9].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==6 && index == selectedPiece - 18 && board[index-9] == "B")?
+    (selectedPiece%8!==7 && board[selectedPiece-7] == "")?
+      squares[selectedPiece-7].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==0 && board[selectedPiece-9] == "")?
+      squares[selectedPiece-9].classList.toggle('available-move') : selectedPiece;
+    (selectedPiece%8!==6 && board[selectedPiece-18] == "" && board[selectedPiece-9] == "B")?
       squares[selectedPiece-18].classList.toggle('available-move') : selectedPiece;
-    (selectedPiece%8!==1 && index == selectedPiece - 14 && board[index-7] == "B")?
+    (selectedPiece%8!==1 && board[selectedPiece-14] == "" && board[selectedPiece-7] == "B")?
       squares[selectedPiece-14].classList.toggle('available-move') : selectedPiece;
   }
 }
-/*
-board.forEach(function(mark, index){
-  if (mark === "" && index%2===1){
-    if (index > selectedPiece){
-      if (selectedPiece%8 !== 0 && index == selectedPiece + 9){ // is not workingi reeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        squares[index].classList.toggle('available-move');
-      }
-      if (selectedPiece%8 !== 7 && index == selectedPiece + 7){
-        squares[index].classList.toggle('available-move');
-      }
-    }
-  }
-});
-*/
