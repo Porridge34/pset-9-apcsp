@@ -175,6 +175,12 @@ h2 {
   width: 150px;
 }
 
+.king {
+  font-weight: bold;
+  color: yellow;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
 .selected-piece {
   font-weight: bold;
   color: red;
