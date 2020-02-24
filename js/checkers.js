@@ -31,7 +31,7 @@ function getWinner() {
   (countBlack === 0)? winner = "White": winner;
   (countWhite === 0)? winner = "Black": winner;
   (countBlack === 1 && countWhite === 1)? turnCount++ : turnCount;
-  (turnCount>==20)? winner = "tie" : winner;
+  (turnCount>=20)? winner = "tie" : winner;
   return winner;
 }
 function init() {
@@ -60,7 +60,7 @@ function render() {
       squares[index].classList.add('king') : index;
   });
   message.textContent =
-    (win === "Black" || win === "White")? `${win} wins!` : `Turn: ${turn}`;
+    win === "tie" ? "It's a tie!" : win ? `${win} wins!` : `Turn: ${turn}`;
 }
 function selectPiece(e) {
   if (!win) {
