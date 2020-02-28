@@ -10,7 +10,7 @@ let ctx = c.getContext("2d");
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 window.onload = init;
-c.addEventListener('click', (e) => {
+c.addEventListener('click', (e) => { //use math to determine which circle was clicked
   const pos = {
     x: e.clientX,
     y: e.clientY
