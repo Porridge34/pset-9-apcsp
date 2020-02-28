@@ -42,70 +42,26 @@ function init() {
 }
 function render() {
   board.forEach(function(mark, index) {
-    switch (mark) {
-      case "":
-        ctx.beginPath();
-        ctx.arc(20*index%7, 20*((index/6)-index%6), 15, 0, 2 * Math.PI);
-        ctx.stroke();
-    }
+    let fillColour;
+    (mark === "R")? fillColour = "red": (mark === "B")? fillColour = "black": fillColour = "white";
+    ctx.beginPath();
+    ctx.arc(70*(index%7)+70, (70*Math.floor(index/7))+70, 30, 0, 2 * Math.PI);
+    ctx.fillStyle = fillColour;
+    ctx.fill();
+    ctx.closePath();
+    ctx.stroke();
   });
   message.textContent =
     win === "T" ? "It's a tie!" : win ? `${win} wins!` : `Turn: ${turn}`;
 }
 function takeTurn(e) {
-  if (!win && !stupidAIIsTrue) {
-    let index = squares.findIndex(function(square) {
-      return square === e.target;
-    });
-    if (board[index] === "") {
-      board[index] = turn;
-      turn = turn === "X" ? "O" : "X";
-      win = getWinner();
-      render();
-    }
-  }else if(!win && stupidAIIsTrue){
-    let index = squares.findIndex(function(square) {
-      return square === e.target;
-    });
-    if (board[index] === "" && turn !== aIXorO) {
-      board[index] = turn;
-      turn = turn === "X" ? "O" : "X";
-      win = getWinner();
-      render();
-      stupidAI();
-    }
-  }
-}
-function stupidAI(){
-  stupidAIIsTrue = true;
-  if (!win) {
-    let index = getBestMove();
+  let index = squares.findIndex(function(square) {
+    return square === e.target;
+  });
+  if (board[index] === "") {
     board[index] = turn;
-    aIXorO = turn;
     turn = turn === "X" ? "O" : "X";
     win = getWinner();
     render();
   }
-}
-function getBestMove(){
-  let index2 = getRandomIndex(board.length);
-  while(board[index2] !== ""){
-    index2 = getRandomIndex(board.length);
-  }
-  winningConditions.forEach(function(condition, index) {
-    if (board[condition[0]] && board[condition[0]] === board[condition[1]]
-    && !board[condition[2]]){
-      index2 = condition[2];
-    }else if(board[condition[1]] && board[condition[1]] === board[condition[2]]
-    && !board[condition[0]]){
-      index2 = condition[0];
-    }else if(board[condition[0]] && board[condition[0]] === board[condition[2]]
-    && !board[condition[1]]){
-      index2 = condition[1];
-    }
-  });
-  return index2;
-}
-function getRandomIndex(max) {
-  return Math.floor(Math.random() * Math.floor(max));
 }
