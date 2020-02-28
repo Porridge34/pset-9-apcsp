@@ -10,7 +10,13 @@ let ctx = c.getContext("2d");
 
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 window.onload = init;
-document.getElementById("board").onclick = takeTurn;
+c.addEventListener('click', (e) => {
+  const pos = {
+    x: e.clientX,
+    y: e.clientY
+  };
+  console.log(pos);
+});
 document.getElementById("reset-button").onclick = init;
 ///////////////////// FUNCTIONS /////////////////////////////////////
 function getWinner() {
@@ -54,14 +60,16 @@ function render() {
   message.textContent =
     win === "T" ? "It's a tie!" : win ? `${win} wins!` : `Turn: ${turn}`;
 }
+/*
 function takeTurn(e) {
-  let index = squares.findIndex(function(square) {
-    return square === e.target;
-  });
   if (board[index] === "") {
-    board[index] = turn;
-    turn = turn === "X" ? "O" : "X";
+    board[index] = turn.charAt(0);
+    turn = turn === "Red" ? "Black" : "Red";
     win = getWinner();
     render();
   }
+}
+*/
+function isIntersect(point, circle) {
+  return Math.sqrt((point.x-circle.x) ** 2 + (point.y - circle.y) ** 2) < circle.radius;
 }
