@@ -15,41 +15,41 @@ c.addEventListener('click', (e) => { //use math to determine which circle was cl
     x: e.clientX,
     y: e.clientY
   };
-  console.log(pos);
+  console.log(pos.x +" is the x" + pos.y + " is the y");
+  board.forEach(function(circle, index){
+    if (isIntersect(pos, circle)){
+      takeTurn(index);
+      console.log(index + " is the index");
+    }
+  });
 });
 document.getElementById("reset-button").onclick = init;
 ///////////////////// FUNCTIONS /////////////////////////////////////
 function getWinner() {
   let winner = null;
   board.forEach(function(mark, index) {
-    if (
-      board[condition[0]] &&
-      board[condition[0]] === board[condition[1]] &&
-      board[condition[1]] === board[condition[2]]
-    ) {
-      winner = board[condition[0]];
-    }
+
   });
   return winner ? winner : board.includes("") ? null : "T";
 }
 function init() {
-  board = [
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-    "", "", "", "", "", "", "",
-  ];
+  board = [];
+  for (let i = 0; i < 42; i++){
+    let circle = {
+      colour: "",
+      x: 70*(i%7)+70,
+      y: 70*Math.floor(i/7)+70
+    }
+    board.push(circle);
+  }
   turn = "Red";
   win = null;
-  stupidAIIsTrue = false;
   render();
 }
 function render() {
   board.forEach(function(mark, index) {
     let fillColour;
-    (mark === "R")? fillColour = "red": (mark === "B")? fillColour = "black": fillColour = "white";
+    (mark.colour === "R")? fillColour = "red": (mark.colour === "B")? fillColour = "black": fillColour = "white";
     ctx.beginPath();
     ctx.arc(70*(index%7)+70, (70*Math.floor(index/7))+70, 30, 0, 2 * Math.PI);
     ctx.fillStyle = fillColour;
@@ -60,16 +60,16 @@ function render() {
   message.textContent =
     win === "T" ? "It's a tie!" : win ? `${win} wins!` : `Turn: ${turn}`;
 }
-/*
-function takeTurn(e) {
-  if (board[index] === "") {
-    board[index] = turn.charAt(0);
+
+function takeTurn(index) {
+  if (board[index].colour === "") {
+    board[index].colour = turn.charAt(0);
     turn = turn === "Red" ? "Black" : "Red";
     win = getWinner();
     render();
   }
 }
-*/
+
 function isIntersect(point, circle) {
-  return Math.sqrt((point.x-circle.x) ** 2 + (point.y - circle.y) ** 2) < circle.radius;
+  return Math.sqrt((point.x-circle.x) ** 2 + (point.y - circle.y) ** 2) < 30;
 }
