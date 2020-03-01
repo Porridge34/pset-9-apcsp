@@ -11,12 +11,10 @@ let ctx = c.getContext("2d");
 ///////////////////// EVENT LISTENERS ///////////////////////////////
 window.onload = init;
 c.addEventListener('click', (e) => { //use math to determine which circle was clicked
-  const pos = {
-    x: e.clientX,
-    y: e.clientY
-  };
+  const pos = getCursorPosition(c, e);
   console.log(pos.x +" is the x" + pos.y + " is the y");
   board.forEach(function(circle, index){
+    console.log(isIntersect(pos, circle))
     if (isIntersect(pos, circle)){
       takeTurn(index);
       console.log(index + " is the index");
@@ -46,6 +44,14 @@ function init() {
   win = null;
   render();
 }
+
+function getCursorPosition(canvas, event) {
+    const rect = canvas.getBoundingClientRect()
+    const xCoord = event.clientX - rect.left
+    const yCoord = event.clientY - rect.top
+    return {x: xCoord, y: yCoord};
+}
+
 function render() {
   board.forEach(function(mark, index) {
     let fillColour;
@@ -71,5 +77,12 @@ function takeTurn(index) {
 }
 
 function isIntersect(point, circle) {
-  return Math.sqrt((point.x-circle.x) ** 2 + (point.y - circle.y) ** 2) < 30;
+  console.log(point.x + " point x & " + circle.x + "circle x");
+  console.log(point.y + " point y & " + circle.y + "circle y");
+  if (point.x >= circle.x - 30 && point.x <= circle.x + 30 &&
+  point.y >= circle.y - 30 && point.y <= circle.y + 30){
+    return true;
+  }else{
+    return false;
+  }
 }
