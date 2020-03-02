@@ -44,13 +44,13 @@ function getWinner() {
   board.forEach(function(mark, index) {
     if(mark.colour !== "none"){
       pieceCount++;
-      if(mark.colour === board[index+1].colour && index%7<4 && index < 39){
+      if(index < 39 && mark.colour === board[index+1].colour && index%7<4){
         (mark.colour === board[index+2].colour && mark.colour === board[index+3].colour)?
         winner = mark.colour : c;
-      }else if(mark.colour === board[index+8].colour && index%7<4 && index < 18){
+      }else if(index < 18 && mark.colour === board[index+8].colour && index%7<4){
         (mark.colour === board[index+16].colour && mark.colour === board[index+24].colour)?
         winner = mark.colour : c;
-      }else if(mark.colour === board[index+6].colour && index%7>3 && index < 18){
+      }else if(index < 18 && mark.colour === board[index+6].colour && index%7>3){
         (mark.colour === board[index+12].colour && mark.colour === board[index+18].colour)?
         winner = mark.colour : c;
       }
