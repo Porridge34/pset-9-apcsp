@@ -53,6 +53,9 @@ function getWinner() {
       }else if(index < 18 && mark.colour === board[index+6].colour && index%7>3){
         (mark.colour === board[index+12].colour && mark.colour === board[index+18].colour)?
         winner = mark.colour : c;
+      }else if(index < 21 && mark.colour === board[index+7].colour && index%7>3){
+        (mark.colour === board[index+14].colour && mark.colour === board[index+21].colour)?
+        winner = mark.colour : c;
       }
     }
   });
@@ -70,7 +73,7 @@ function getCursorPosition(canvas, event) {
 function render() {
   board.forEach(function(mark, index) {
     let fillColour;
-    (mark.colour === "R")? fillColour = "red": (mark.colour === "Y")? fillColour = "yellow": fillColour = "white";
+    (mark.colour === "Red")? fillColour = "red": (mark.colour === "Yellow")? fillColour = "yellow": fillColour = "white";
     ctx.beginPath();
     ctx.arc(70*(index%7)+70, (70*Math.floor(index/7))+70, 30, 0, 2 * Math.PI);
     ctx.fillStyle = fillColour;
