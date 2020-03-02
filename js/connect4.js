@@ -41,6 +41,7 @@ function getWinner() {
       }
     }
   });
+  pieceCount === 42? winner = "T": winner;
   return winner;
 }
 function init() {
