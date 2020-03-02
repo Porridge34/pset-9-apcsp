@@ -26,7 +26,11 @@ document.getElementById("reset-button").onclick = init;
 function getWinner() {
   let winner = null;
   board.forEach(function(mark, index) {
-
+    if(mark.colour === board[index+1].colour && index%7<5){
+      mark.colour === board[]
+    }else if(mark.colour === board[index+1].colour && index%7==5){
+      (mark.colour===board[index-1] && mark.colour===board[index-2])?winner = mark.colour : c;
+    }
   });
   return winner;
 }
@@ -55,7 +59,7 @@ function getCursorPosition(canvas, event) {
 function render() {
   board.forEach(function(mark, index) {
     let fillColour;
-    (mark.colour === "R")? fillColour = "red": (mark.colour === "B")? fillColour = "black": fillColour = "white";
+    (mark.colour === "R")? fillColour = "red": (mark.colour === "Y")? fillColour = "yellow": fillColour = "white";
     ctx.beginPath();
     ctx.arc(70*(index%7)+70, (70*Math.floor(index/7))+70, 30, 0, 2 * Math.PI);
     ctx.fillStyle = fillColour;
@@ -70,7 +74,7 @@ function render() {
 function takeTurn(index) {
   if (validMove(index)) {
     board[index].colour = turn.charAt(0);
-    turn = turn === "Red" ? "Black" : "Red";
+    turn = turn === "Red" ? "Yellow" : "Red";
     win = getWinner();
     render();
   }
