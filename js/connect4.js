@@ -26,10 +26,12 @@ document.getElementById("reset-button").onclick = init;
 function getWinner() {
   let winner = null;
   board.forEach(function(mark, index) {
-    if(mark.colour === board[index+1].colour && index%7<5){
-      mark.colour === board[]
-    }else if(mark.colour === board[index+1].colour && index%7==5){
-      (mark.colour===board[index-1] && mark.colour===board[index-2])?winner = mark.colour : c;
+    if(mark.colour === board[index+1].colour && index%7<4 && index < 39){
+      (mark.colour === board[index+2].colour && mark.colour === board[index+3].colour)?
+      winner = mark.colour : c;
+    }else if(mark.colour === board[index+8].colour && index%7<4 && index < 18){
+      (mark.colour === board[index+16].colour && mark.colour === board[index+24].colour)?
+      winner = mark.colour : c;
     }
   });
   return winner;
