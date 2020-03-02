@@ -23,6 +23,21 @@ c.addEventListener('click', (e) => { //use math to determine which circle was cl
 });
 document.getElementById("reset-button").onclick = init;
 ///////////////////// FUNCTIONS /////////////////////////////////////
+function init() {
+  board = [];
+  for (let i = 0; i < 42; i++){
+    let circle = {
+      colour: "none",
+      x: 70*(i%7)+70,
+      y: 70*Math.floor(i/7)+70
+    }
+    board.push(circle);
+  }
+  turn = "Red";
+  win = null;
+  render();
+}
+
 function getWinner() {
   let winner = null;
   let pieceCount = 0;
@@ -43,20 +58,6 @@ function getWinner() {
   });
   pieceCount === 42? winner = "T": winner;
   return winner;
-}
-function init() {
-  board = [];
-  for (let i = 0; i < 42; i++){
-    let circle = {
-      colour: "none",
-      x: 70*(i%7)+70,
-      y: 70*Math.floor(i/7)+70
-    }
-    board.push(circle);
-  }
-  turn = "Red";
-  win = null;
-  render();
 }
 
 function getCursorPosition(canvas, event) {
