@@ -86,7 +86,7 @@ function render() {
 }
 
 function takeTurn(index) {
-  if (validMove(index)) {
+  if (validMove(index) && !win) {
     board[index].colour = turn;
     turn = turn === "Red" ? "Yellow" : "Red";
     win = getWinner();
