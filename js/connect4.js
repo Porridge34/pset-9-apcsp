@@ -25,6 +25,7 @@ document.getElementById("reset-button").onclick = init;
 ///////////////////// FUNCTIONS /////////////////////////////////////
 function getWinner() {
   let winner = null;
+  let pieceCount = 0;
   board.forEach(function(mark, index) {
     if(mark.colour === board[index+1].colour && index%7<4 && index < 39){
       (mark.colour === board[index+2].colour && mark.colour === board[index+3].colour)?
@@ -32,7 +33,7 @@ function getWinner() {
     }else if(mark.colour === board[index+8].colour && index%7<4 && index < 18){
       (mark.colour === board[index+16].colour && mark.colour === board[index+24].colour)?
       winner = mark.colour : c;
-    }else if(mark.colour === board[index+6].colour && index%7>3 && index ){
+    }else if(mark.colour === board[index+6].colour && index%7>3 && index < 18){
       (mark.colour === board[index+12].colour && mark.colour === board[index+18].colour)?
       winner = mark.colour : c;
     }
