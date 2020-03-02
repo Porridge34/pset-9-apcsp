@@ -27,7 +27,7 @@ function getWinner() {
   let winner = null;
   let pieceCount = 0;
   board.forEach(function(mark, index) {
-    if(mark.colour !== ""){
+    if(mark.colour !== "none"){
       pieceCount++;
       if(mark.colour === board[index+1].colour && index%7<4 && index < 39){
         (mark.colour === board[index+2].colour && mark.colour === board[index+3].colour)?
@@ -48,7 +48,7 @@ function init() {
   board = [];
   for (let i = 0; i < 42; i++){
     let circle = {
-      colour: "",
+      colour: "none",
       x: 70*(i%7)+70,
       y: 70*Math.floor(i/7)+70
     }
@@ -104,10 +104,10 @@ function isIntersect(point, circle) {
 }
 
 function validMove(index){
-  if (board[index].colour === ""){
+  if (board[index].colour === "none"){
     if (index > 34){
       return true;
-    }else if (board[index+7].colour !== ""){
+    }else if (board[index+7].colour !== "none"){
       return true;
     }else{
       return false;
