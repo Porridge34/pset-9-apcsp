@@ -69,7 +69,7 @@ function getCursorPosition(canvas, event) {
     const yCoord = event.clientY - rect.top
     return {x: xCoord, y: yCoord};
 }
-
+//d
 function render() {
   board.forEach(function(mark, index) {
     let fillColour;
