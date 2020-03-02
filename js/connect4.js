@@ -70,6 +70,7 @@ function getCursorPosition(canvas, event) {
     return {x: xCoord, y: yCoord};
 }
 //d
+//d
 function render() {
   board.forEach(function(mark, index) {
     let fillColour;
