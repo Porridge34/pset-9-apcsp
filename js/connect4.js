@@ -28,7 +28,7 @@ function getWinner() {
   board.forEach(function(mark, index) {
 
   });
-  return winner ? winner : board.includes("") ? null : "T";
+  return winner;
 }
 function init() {
   board = [];
@@ -68,7 +68,7 @@ function render() {
 }
 
 function takeTurn(index) {
-  if (board[index].colour === "") {
+  if (validMove(index)) {
     board[index].colour = turn.charAt(0);
     turn = turn === "Red" ? "Black" : "Red";
     win = getWinner();
@@ -77,12 +77,28 @@ function takeTurn(index) {
 }
 
 function isIntersect(point, circle) {
+  /*
   console.log(point.x + " point x & " + circle.x + "circle x");
   console.log(point.y + " point y & " + circle.y + "circle y");
+  */
   if (point.x >= circle.x - 30 && point.x <= circle.x + 30 &&
   point.y >= circle.y - 30 && point.y <= circle.y + 30){
     return true;
   }else{
+    return false;
+  }
+}
+
+function validMove(index){
+  if (board[index].colour === ""){
+    if (index > 34){
+      return true;
+    }else if (board[index+7].colour !== ""){
+      return true;
+    }else{
+      return false;
+    }
+  }else {
     return false;
   }
 }
